@@ -17,17 +17,21 @@ public class DemoLoggingAspect {
 
     // setup pointcut declarations
     @Pointcut("execution(* com.luv2code.springboot.thymeleafdemo.controller.*.*(..))")
-    private void forControllerPackage() {}
+    private void forControllerPackage() {
+    }
 
     @Pointcut("execution(* com.luv2code.springboot.thymeleafdemo.service.*.*(..))")
-    private void forServicePackage() {}
+    private void forServicePackage() {
+    }
 
     @Pointcut("execution(* com.luv2code.springboot.thymeleafdemo.dao.*.*(..))")
-    private void forDaoPackage() {}
+    private void forDaoPackage() {
+    }
 
     // combined pointcut declaration
     @Pointcut("forControllerPackage() || forServicePackage() || forDaoPackage()")
-    private void forAppFlow() {}
+    private void forAppFlow() {
+    }
 
     @Before("forAppFlow()")
     public void before(JoinPoint theJoinPoint) {
@@ -35,7 +39,12 @@ public class DemoLoggingAspect {
         String theMethod = theJoinPoint.getSignature().toShortString();
         myLogger.info("====>> in @Before: calling method: " + theMethod);
 
+        // display the arguments to the method
+        Object[] args = theJoinPoint.getArgs();
 
-        // display the argumets to the methof
+        for (Object tempArg : args) {
+            myLogger.info("====>> argument: " + tempArg);
+        }
+
     }
 }
